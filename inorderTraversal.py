@@ -58,5 +58,6 @@ class Solution(object):
 solution = Solution()
 
 testcase1 = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
+testcase1_pass = [4, 2, 6, 5, 7, 1, 3, 9, 8]
 testcase1_root = build_tree_from_list(testcase1)
-print(f"{solution.inorderTraversal(testcase1_root)}")
+print(solution.inorderTraversal(testcase1_root) == testcase1_pass)
