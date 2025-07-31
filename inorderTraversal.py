@@ -46,26 +46,21 @@ class Solution(object):
             return result
 
         stack = []
-        stack.append((root, True, True))
+        current = root
+        stack.append(current)
+        while current.left:
+            stack.append(current.left)
+            current = current.left
 
         while stack:
-            current, left, right = stack.pop()
-            if left == True and right == True:
-                stack.append((current, False, True))
-                if current.left:
+            current = stack.pop()
+            result.append(current.val)
+            if current.right:
+                current = current.right
+                stack.append(current)
+                while current.left:
+                    stack.append(current.left)
                     current = current.left
-                    stack.append((current, True, True))
-                else: # current.left is None
-                    continue
-            elif left == False and right == True:
-                # process current val
-                result.append(current.val)
-                stack.append((current, False, False))
-                if current.right:
-                    current = current.right
-                    stack.append((current, True, True))
-            elif left == False and right == False:
-                continue
 
         return result
 
