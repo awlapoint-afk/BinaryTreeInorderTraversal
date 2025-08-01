@@ -64,6 +64,32 @@ class Solution(object):
 
         return result
 
+    def is_tree_balanced(self, root: TreeNode):
+
+        def get_depth(node) -> int:
+
+            if node.left:
+                l = get_depth(node.left)
+            else:
+                l = 1
+            if node.right:
+                r = get_depth(node.right)
+            else:
+                r = 1
+
+            if not l or not r:
+                return -1
+            if abs(l - r) > 1:
+                return -1
+            else:
+                return max(l, r) + 1
+
+        rc = get_depth(root)
+        if rc == -1:
+            return False
+        else:
+            return True
+
 
 solution = Solution()
 
@@ -72,3 +98,4 @@ testcase1_pass = [4, 2, 6, 5, 7, 1, 3, 9, 8]
 testcase1_root = build_tree_from_list(testcase1)
 print(solution.inorderTraversal(testcase1_root) == testcase1_pass)
 print(solution.inorderTraversal(testcase1_root))
+print(solution.is_tree_balanced(testcase1_root))
