@@ -65,9 +65,7 @@ class Solution(object):
         return result
 
     def is_tree_balanced(self, root: TreeNode):
-
         def get_depth(node) -> int:
-
             if node.left:
                 l = get_depth(node.left)
             else:
@@ -79,7 +77,7 @@ class Solution(object):
 
             if not l or not r:
                 return -1
-            if abs(l - r) > 1:
+            elif abs(l - r) > 1:
                 return -1
             else:
                 return max(l, r) + 1
