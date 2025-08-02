@@ -94,26 +94,18 @@ class Solution(object):
         :type q: Optional[TreeNode]
         :rtype: bool
         """
-        result_p = []
-        result_q = []
+        def comp_nodes(root_a, root_b):
+            if not root_a and not root_b:
+                return True
+            if (root_a is None) != (root_b is None):
+                return False
 
-        def list_nodes(root, result):
-            if not root:
-                return
+            if root_a.val != root_b.val:
+                return False
 
-            result.append(root.val)
-            if not root.left:
-                result.append("null")
-            else:
-                list_nodes(root.left, result)
-            if not root.right:
-                result.append("null")
-            else:
-                list_nodes(root.right, result)
+            return comp_nodes(root_a.left, root_b.left) and comp_nodes(root_a.right, root_b.right)
 
-        list_nodes(p, result_p)
-        list_nodes(q, result_q)
-        return result_p == result_q
+        return comp_nodes(p, q)
 
 
 solution = Solution()
@@ -129,4 +121,11 @@ p_list = [5,4,1,None,1,None,4,2,None,2]
 q_list = [5,1,4,4,None,1,None,None,2,None,2]
 p = build_tree_from_list(p_list)
 q = build_tree_from_list(q_list)
+
+a_list = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
+b_list = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
+a = build_tree_from_list(a_list)
+b = build_tree_from_list(b_list)
+
 print(solution.isSameTree(p, q))
+print(solution.isSameTree(a, b))
