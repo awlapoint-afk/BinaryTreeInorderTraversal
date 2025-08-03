@@ -126,6 +126,102 @@ class Solution(object):
         return comp_nodes(root.left, root.right)
 
 
+    def isSymmetricIter(self, root):
+        result_a = []
+        result_b = []
+
+        if not root:
+            return []
+
+        root_a = root.left
+        root_b = root.right
+
+        if not root_a and not root_b:
+            return True
+        if (root_a is None) != (root_b is None):
+            return False
+
+        stack_a = []
+        current = root_a
+        stack_a.append(current)
+        while current.left:
+            stack_a.append(current.left)
+            current = current.left
+
+        while stack_a:
+            current = stack_a.pop()
+            result_a.append(current.val)
+            if current.right:
+                current = current.right
+                stack_a.append(current)
+                while current.left:
+                    stack_a.append(current.left)
+                    current = current.left
+                    if not current.left:
+                        result_a.append('null')
+            else:
+                result_a.append('null')
+
+        stack_b = []
+        current = root_b
+        stack_b.append(current)
+        while current.right:
+            stack_b.append(current.right)
+            current = current.right
+
+        while stack_b:
+            current = stack_b.pop()
+            result_b.append(current.val)
+            if current.left:
+                current = current.left
+                stack_b.append(current)
+                while current.right:
+                    stack_b.append(current.right)
+                    current = current.right
+                    if not current.right:
+                        result_b.append('null')
+            else:
+                result_b.append('null')
+
+        print(f"result_a: {result_a} result_b: {result_b}")
+        return result_a == result_b
+
+    def isSymmetricIter2(self, root):
+        if not root:
+            return True
+        if (root.left is None) != (root.right is None):
+            return False
+
+        stack = []
+
+        current_left = root.left
+        current_right = root.right
+
+        while current_left and current_right:
+            stack.append((current_left, current_right))
+            current_left = current_left.left
+            current_right = current_right.right
+
+        if (current_left is None) != (current_right is None):
+            return False
+
+        while stack:
+            current_left, current_right = stack.pop()
+            if current_left.val != current_right.val:
+                return False
+
+            if (current_left.left is None) != (current_right.right is None):
+                return False
+            if (current_left.right is None) != (current_right.left is None):
+                return False
+            if current_left.left and current_right.right:
+                stack.append((current_left.left, current_right.right))
+            if current_left.right and current_right.left:
+                stack.append((current_left.right, current_right.left))
+
+        return True
+
+
 solution = Solution()
 
 # InorderTraversal tests
@@ -151,4 +247,22 @@ solution = Solution()
 # isSymmetric tests
 test1_list = [1,2,2,3,4,4,3]
 test1 = build_tree_from_list(test1_list)
-print(solution.isSymmetric(test1))
+print(solution.isSymmetricIter2(test1))
+
+test2_list = [1,2,2,None,3,None,3]
+test2 = build_tree_from_list(test2_list)
+print(solution.isSymmetricIter2(test2))
+
+test3_list = [1,0]
+test3 = build_tree_from_list(test3_list)
+print(solution.isSymmetricIter2(test3))
+
+test4_list = [5,2,2,4,None,None,1,None,1,None,4,2,None,2,None]
+test4 = build_tree_from_list(test4_list)
+print(solution.isSymmetricIter2(test4))
+
+# test5_list = [1, 2, 2, None, 3, 3, None]
+# test5_list = [1, 2, 2, 3, None, None, 3]
+test5_list = [1, 2, 2, 3, None, 3, None]
+test5 = build_tree_from_list(test5_list)
+print(solution.isSymmetricIter2(test5))
