@@ -107,9 +107,28 @@ class Solution(object):
 
         return comp_nodes(p, q)
 
+    def isSymmetric(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: bool
+        """
+        def comp_nodes(root_a, root_b):
+            if not root_a and not root_b:
+                return True
+            if (root_a is None) != (root_b is None):
+                return False
+
+            if root_a.val != root_b.val:
+                return False
+
+            return comp_nodes(root_a.left, root_b.right) and comp_nodes(root_a.right, root_b.left)
+
+        return comp_nodes(root.left, root.right)
+
 
 solution = Solution()
 
+# InorderTraversal tests
 # testcase1 = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
 # testcase1_pass = [4, 2, 6, 5, 7, 1, 3, 9, 8]
 # testcase1_root = build_tree_from_list(testcase1)
@@ -117,15 +136,19 @@ solution = Solution()
 # print(solution.inorderTraversal(testcase1_root))
 # print(solution.is_tree_balanced(testcase1_root))
 
-p_list = [5,4,1,None,1,None,4,2,None,2]
-q_list = [5,1,4,4,None,1,None,None,2,None,2]
-p = build_tree_from_list(p_list)
-q = build_tree_from_list(q_list)
+# isSameTree tests
+# p_list = [5,4,1,None,1,None,4,2,None,2]
+# q_list = [5,1,4,4,None,1,None,None,2,None,2]
+# p = build_tree_from_list(p_list)
+# q = build_tree_from_list(q_list)
+# a_list = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
+# b_list = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
+# a = build_tree_from_list(a_list)
+# b = build_tree_from_list(b_list)
+# print(solution.isSameTree(p, q))
+# print(solution.isSameTree(a, b))
 
-a_list = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
-b_list = [1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9]
-a = build_tree_from_list(a_list)
-b = build_tree_from_list(b_list)
-
-print(solution.isSameTree(p, q))
-print(solution.isSameTree(a, b))
+# isSymmetric tests
+test1_list = [1,2,2,3,4,4,3]
+test1 = build_tree_from_list(test1_list)
+print(solution.isSymmetric(test1))
