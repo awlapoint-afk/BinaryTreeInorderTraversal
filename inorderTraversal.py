@@ -107,7 +107,7 @@ class Solution(object):
 
         return comp_nodes(p, q)
 
-    def isSymmetric(self, root):
+    def isSymmetricRec(self, root):
         """
         :type root: Optional[TreeNode]
         :rtype: bool
@@ -126,7 +126,7 @@ class Solution(object):
         return comp_nodes(root.left, root.right)
 
 
-    def isSymmetricIter(self, root):
+    def isSymmetricOld(self, root):
         result_a = []
         result_b = []
 
@@ -186,7 +186,7 @@ class Solution(object):
         print(f"result_a: {result_a} result_b: {result_b}")
         return result_a == result_b
 
-    def isSymmetricIter2(self, root):
+    def isSymmetric(self, root):
         if not root:
             return True
         if (root.left is None) != (root.right is None):
@@ -194,30 +194,22 @@ class Solution(object):
 
         stack = []
 
-        current_left = root.left
-        current_right = root.right
-
-        while current_left and current_right:
-            stack.append((current_left, current_right))
-            current_left = current_left.left
-            current_right = current_right.right
-
-        if (current_left is None) != (current_right is None):
-            return False
+        if root.left and root.right:
+            stack.append((root.left, root.right))
 
         while stack:
-            current_left, current_right = stack.pop()
-            if current_left.val != current_right.val:
+            current_a, current_b = stack.pop()
+            if current_a.val != current_b.val:
                 return False
 
-            if (current_left.left is None) != (current_right.right is None):
+            if (current_a.left is None) != (current_b.right is None):
                 return False
-            if (current_left.right is None) != (current_right.left is None):
+            if (current_a.right is None) != (current_b.left is None):
                 return False
-            if current_left.left and current_right.right:
-                stack.append((current_left.left, current_right.right))
-            if current_left.right and current_right.left:
-                stack.append((current_left.right, current_right.left))
+            if current_a.left and current_b.right:
+                stack.append((current_a.left, current_b.right))
+            if current_a.right and current_b.left:
+                stack.append((current_a.right, current_b.left))
 
         return True
 
