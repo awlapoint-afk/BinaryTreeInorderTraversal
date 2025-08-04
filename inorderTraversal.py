@@ -234,6 +234,28 @@ class Solution(object):
             max_depth = max(max_depth, depth)
 
         return max_depth
+    
+    def sortedArrayToBST(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: Optional[TreeNode]
+        """
+        n_len = len(nums)
+        if n_len == 1:
+            return TreeNode(nums[0])
+        elif n_len == 0:
+            return None
+
+        left = 0
+        right = n_len - 1
+
+        mid = left + (right - left) // 2
+
+        current = TreeNode(nums[mid])
+        current.left = self.sortedArrayToBST(nums[:mid])
+        current.right = self.sortedArrayToBST(nums[mid+1:])
+
+        return current
 
 
 solution = Solution()
@@ -259,26 +281,31 @@ solution = Solution()
 # print(solution.isSameTree(a, b))
 
 # isSymmetric tests
-test1_list = [1,2,2,3,4,4,3]
-test1 = build_tree_from_list(test1_list)
-print(solution.isSymmetric(test1))
+# test1_list = [1,2,2,3,4,4,3]
+# test1 = build_tree_from_list(test1_list)
+# print(solution.isSymmetric(test1))
 
-test2_list = [1,2,2,None,3,None,3]
-test2 = build_tree_from_list(test2_list)
-print(solution.isSymmetric(test2))
+# test2_list = [1,2,2,None,3,None,3]
+# test2 = build_tree_from_list(test2_list)
+# print(solution.isSymmetric(test2))
 
-test3_list = [1,0]
-test3 = build_tree_from_list(test3_list)
-print(solution.isSymmetric(test3))
+# test3_list = [1,0]
+# test3 = build_tree_from_list(test3_list)
+# print(solution.isSymmetric(test3))
 
-test4_list = [5,2,2,4,None,None,1,None,1,None,4,2,None,2,None]
-test4 = build_tree_from_list(test4_list)
-print(solution.isSymmetric(test4))
+# test4_list = [5,2,2,4,None,None,1,None,1,None,4,2,None,2,None]
+# test4 = build_tree_from_list(test4_list)
+# print(solution.isSymmetric(test4))
 
 # test5_list = [1, 2, 2, None, 3, 3, None]
 # test5_list = [1, 2, 2, 3, None, None, 3]
-test5_list = [1, 2, 2, 3, None, 3, None]
-test5 = build_tree_from_list(test5_list)
-print(solution.isSymmetric(test5))
+# test5_list = [1, 2, 2, 3, None, 3, None]
+# test5 = build_tree_from_list(test5_list)
+# print(solution.isSymmetric(test5))
 
-print(solution.maxDepth(test5))
+# print(solution.maxDepth(test5))
+
+test6_list = [1,2,3,4,5,6,7,8,9]
+test6_root = solution.sortedArrayToBST(test6_list)
+print(solution.is_tree_balanced(test6_root))
+print(solution.inorderTraversal(test6_root))
