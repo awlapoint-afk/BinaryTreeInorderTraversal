@@ -212,6 +212,28 @@ class Solution(object):
                 stack.append((current_a.right, current_b.left))
 
         return True
+    
+    def maxDepth(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: int
+        """
+        max_depth = 0
+        if not root:
+            return max_depth
+
+        stack = [(root, 1)]
+        while stack:
+            current, depth = stack.pop()
+
+            if current.left:
+                stack.append((current.left, depth + 1))
+            if current.right:
+                stack.append((current.right, depth + 1))
+
+            max_depth = max(max_depth, depth)
+
+        return max_depth
 
 
 solution = Solution()
@@ -239,22 +261,24 @@ solution = Solution()
 # isSymmetric tests
 test1_list = [1,2,2,3,4,4,3]
 test1 = build_tree_from_list(test1_list)
-print(solution.isSymmetricIter2(test1))
+print(solution.isSymmetric(test1))
 
 test2_list = [1,2,2,None,3,None,3]
 test2 = build_tree_from_list(test2_list)
-print(solution.isSymmetricIter2(test2))
+print(solution.isSymmetric(test2))
 
 test3_list = [1,0]
 test3 = build_tree_from_list(test3_list)
-print(solution.isSymmetricIter2(test3))
+print(solution.isSymmetric(test3))
 
 test4_list = [5,2,2,4,None,None,1,None,1,None,4,2,None,2,None]
 test4 = build_tree_from_list(test4_list)
-print(solution.isSymmetricIter2(test4))
+print(solution.isSymmetric(test4))
 
 # test5_list = [1, 2, 2, None, 3, 3, None]
 # test5_list = [1, 2, 2, 3, None, None, 3]
 test5_list = [1, 2, 2, 3, None, 3, None]
 test5 = build_tree_from_list(test5_list)
-print(solution.isSymmetricIter2(test5))
+print(solution.isSymmetric(test5))
+
+print(solution.maxDepth(test5))
