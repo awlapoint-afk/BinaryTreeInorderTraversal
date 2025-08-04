@@ -240,22 +240,24 @@ class Solution(object):
         :type nums: List[int]
         :rtype: Optional[TreeNode]
         """
-        n_len = len(nums)
-        if n_len == 1:
-            return TreeNode(nums[0])
-        elif n_len == 0:
-            return None
+        def create_tree(left, right):
+            if (right - left + 1) == 1:
+                return TreeNode(nums[left])
+            elif (right - left + 1) == 0:
+                return None
 
-        left = 0
-        right = n_len - 1
+            mid = left + (right - left) // 2
 
-        mid = left + (right - left) // 2
+            current = TreeNode(nums[mid])
+            current.left = create_tree(left, mid - 1)
+            current.right = create_tree(mid + 1, right)
 
-        current = TreeNode(nums[mid])
-        current.left = self.sortedArrayToBST(nums[:mid])
-        current.right = self.sortedArrayToBST(nums[mid+1:])
+            return current
 
-        return current
+        l = 0
+        r = len(nums) - 1
+
+        return create_tree(l, r)
 
 
 solution = Solution()
