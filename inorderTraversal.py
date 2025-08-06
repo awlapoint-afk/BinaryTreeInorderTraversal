@@ -360,4 +360,4 @@ solution = Solution()
 test6_list = [1,2,3,4,5,6,7,8,9]
 test6_root = solution.sortedArrayToBST_iter(test6_list)
 print(solution.is_tree_balanced(test6_root))
-print(solution.inorderTraversalTwo(test6_root))
+print(solution.inorderTraversalLlama(test6_root))
