@@ -259,6 +259,38 @@ class Solution(object):
 
         return create_tree(l, r)
 
+    def sortedArrayToBST_iter(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: Optional[TreeNode]
+        """
+        if not nums:
+            return None
+
+        stack = []
+        root = TreeNode()
+        stack.append((root, 0, len(nums) - 1))
+        # stack = (node, left, right)
+        while stack:
+            current, left, right = stack.pop()
+
+            mid = left + (right - left) // 2
+            current.val = nums[mid]
+
+            if left < mid:
+                current.left = TreeNode()
+                stack.append((current.left, left, mid - 1))
+            else:
+                current.left = None
+
+            if right > mid:
+                current.right = TreeNode()
+                stack.append((current.right, mid + 1, right))
+            else:
+                current.right = None
+
+        return root
+
 
 solution = Solution()
 
@@ -308,6 +340,6 @@ solution = Solution()
 # print(solution.maxDepth(test5))
 
 test6_list = [1,2,3,4,5,6,7,8,9]
-test6_root = solution.sortedArrayToBST(test6_list)
+test6_root = solution.sortedArrayToBST_iter(test6_list)
 print(solution.is_tree_balanced(test6_root))
 print(solution.inorderTraversal(test6_root))
