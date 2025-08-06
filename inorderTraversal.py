@@ -64,6 +64,28 @@ class Solution(object):
 
         return result
 
+    def inorderTraversalLlama(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: List[int]
+        """
+        result = []
+        if not root:
+            return result
+
+        stack = []
+        current = root
+        while current or stack:
+            if current:
+                stack.append(current)
+                current = current.left
+            elif stack:
+                current = stack.pop()
+                result.append(current.val)
+                current = current.right
+
+        return result
+
     def is_tree_balanced(self, root: TreeNode):
         def get_depth(node) -> int:
             if node.left:
@@ -338,4 +360,4 @@ solution = Solution()
 test6_list = [1,2,3,4,5,6,7,8,9]
 test6_root = solution.sortedArrayToBST_iter(test6_list)
 print(solution.is_tree_balanced(test6_root))
-print(solution.inorderTraversal(test6_root))
+print(solution.inorderTraversalTwo(test6_root))
