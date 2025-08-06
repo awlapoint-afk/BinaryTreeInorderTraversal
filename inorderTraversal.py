@@ -280,14 +280,10 @@ class Solution(object):
             if left < mid:
                 current.left = TreeNode()
                 stack.append((current.left, left, mid - 1))
-            else:
-                current.left = None
 
             if right > mid:
                 current.right = TreeNode()
                 stack.append((current.right, mid + 1, right))
-            else:
-                current.right = None
 
         return root
 
