@@ -309,6 +309,29 @@ class Solution(object):
 
         return root
 
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        if not root:
+            return None
+
+        if root.val == p.val or root.val == q.val:
+            return root
+
+        l_node = self.lowestCommonAncestor(root.left, p, q)
+        r_node = self.lowestCommonAncestor(root.right, p, q)
+
+        if l_node and r_node:
+            return root
+        elif l_node:
+            return l_node
+        else:
+            return r_node
+
 
 solution = Solution()
 
@@ -357,7 +380,19 @@ solution = Solution()
 
 # print(solution.maxDepth(test5))
 
-test6_list = [1,2,3,4,5,6,7,8,9]
-test6_root = solution.sortedArrayToBST_iter(test6_list)
-print(solution.is_tree_balanced(test6_root))
-print(solution.inorderTraversalLlama(test6_root))
+# test6_list = [1,2,3,4,5,6,7,8,9]
+# test6_root = solution.sortedArrayToBST_iter(test6_list)
+# print(solution.is_tree_balanced(test6_root))
+# print(solution.inorderTraversalLlama(test6_root))
+
+test7_list = [3,5,1,6,2,0,8,None,None,7,4]
+test7_root = build_tree_from_list(test7_list)
+test7nodea = solution.lowestCommonAncestor(test7_root, TreeNode(5), TreeNode(1))
+test7nodeb = solution.lowestCommonAncestor(test7_root, TreeNode(5), TreeNode(4))
+test8_list = [1,2]
+test8_root = build_tree_from_list(test8_list)
+test8nodea = solution.lowestCommonAncestor(test8_root, TreeNode(1), TreeNode(2))
+
+for test in [test7nodea, test7nodeb, test8nodea]:
+    if test:
+        print(f"{test.val}")
